@@ -15,7 +15,7 @@ import os.path
 import ctypes
 
 __author__ = 'Maarten Hoogveld'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __email__ = 'maarten@hoogveld.org'
 __licence__ = 'GPL-3.0'
 __status__ = 'Production'
@@ -32,13 +32,14 @@ class GreywarePtpChecker:
     V_INFO = 1
     V_DEBUG = 2
 
-    # Max measurement age in minutes
-    MAX_MEASUREMENT_AGE = 5
+    # Max measurement age in minutes (the date of the last entry in the log file)
+    MAX_MEASUREMENT_AGE = 4
 
     def __init__(self):
         self.status = None
         self.messages = []
         self.perfdata = []
+        self.delta_time_unit = 'µs'
         self.options = None
 
     def run(self):
@@ -49,10 +50,10 @@ class GreywarePtpChecker:
 
     def check(self):
         """
-        Perform checks @@@ on the requested entries
+        Perform time delta check based on entries in the logfile
         :return:
         """
-        self.print_msg(self.V_DEBUG, 'Performing checks @@@ for requested entries')
+        self.print_msg(self.V_DEBUG, 'Performing time delta check based on entries in the logfile')
 
         # Initialize result status as OK
         self.add_status(self.STATUS_OK)
@@ -66,6 +67,11 @@ class GreywarePtpChecker:
             return
 
         summary_line = self.get_last_summary_line(self.options.logfile)
+        if summary_line is None:
+            self.add_status(self.STATUS_UNKNOWN)
+            self.add_message('Can\'t read delta from logfile')
+            return
+
         last_delta_usec = self.parse_line_for_delta_usec(summary_line)
         last_measurement_datetime = self.parse_line_for_datetime(summary_line)
         min_last_measurement_datetime = datetime.datetime.now() - datetime.timedelta(minutes=self.MAX_MEASUREMENT_AGE)
@@ -82,13 +88,25 @@ class GreywarePtpChecker:
             self.add_message('PTP drift delta can not be read from log file')
         elif self.options.critical is not None and last_delta_usec >= self.options.critical:
             self.add_status(self.STATUS_CRITICAL)
-            self.add_message('PTP drift delta is over critical threshold of {0}µs'.format(self.options.critical))
+            self.add_message(
+                'PTP drift delta is {delta}{unit} which is over critical threshold of {crit}{unit}'.format(
+                    delta=round(last_delta_usec),
+                    crit=self.options.critical,
+                    unit=self.delta_time_unit
+                )
+            )
         elif self.options.warning is not None and last_delta_usec >= self.options.warning:
             self.add_status(self.STATUS_WARNING)
-            self.add_message('PTP drift delta is over warning threshold of {0}µs'.format(self.options.warning))
+            self.add_message(
+                'PTP drift delta is {delta}{unit} which is over warning threshold of {warn}{unit}'.format(
+                    delta=round(last_delta_usec),
+                    warn=self.options.warning,
+                    unit=self.delta_time_unit
+                )
+            )
 
         if self.options.perf and last_delta_usec is not None:
-            perfmsg = 'delta={0}µs'.format(round(last_delta_usec))
+            perfmsg = 'delta={delta}{unit}'.format(delta=round(last_delta_usec), unit=self.delta_time_unit)
             if self.options.warning is not None and self.options.critical is not None:
                 perfmsg += ';{warn};{crit}'.format(warn=self.options.warning, crit=self.options.critical)
             self.add_perfdata(perfmsg)
@@ -108,6 +126,10 @@ class GreywarePtpChecker:
                             default=None, type=int, help='Critical threshold in amount of drift in microseconds')
         parser.add_argument('--warning',
                             default=None, type=int, help='Warning threshold in amount of drift in microseconds')
+        parser.add_argument('--ascii-only',
+                            action='store_true', help='Output only ASCII characters. (Don\'t use the "mu" character)')
+        parser.add_argument('--no-utf8',
+                            default=0, help='Verbose output')
         parser.add_argument('--verbose',
                             default=0, type=int, choices=[0, 1, 2], help='Verbose output')
         self.options = parser.parse_args()
@@ -117,12 +139,15 @@ class GreywarePtpChecker:
             print('')
             exit(0)
 
+        if self.options.ascii_only:
+            self.delta_time_unit = 'us'
+
         self.print_msg(self.V_DEBUG, 'Using parameters:')
         self.print_msg(self.V_DEBUG, ' Logfile:             {}'.format(self.options.logfile))
         self.print_msg(self.V_DEBUG, ' Warning threshold:   {}'.format(
-            str(self.options.warning) + 'µs' if self.options.warning else ''))
+            str(self.options.warning) + self.delta_time_unit if self.options.warning else ''))
         self.print_msg(self.V_DEBUG, ' Critical threshold:  {}'.format(
-            str(self.options.critical) + 'µs' if self.options.critical else ''))
+            str(self.options.critical) + self.delta_time_unit if self.options.critical else ''))
         self.print_msg(self.V_DEBUG, ' Verbosity:           {}'.format(self.options.verbose))
         self.print_msg(self.V_DEBUG, '')
 

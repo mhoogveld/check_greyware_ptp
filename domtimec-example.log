@@ -1,0 +1,41 @@
+Mon Jan 29 2018 00:00:46 Info:    Previous contents archived to C:\Windows\system32\domtimec.20180128.log
+===================================
+Mon Jan 29 2018 00:00:46 Info:    Wait expired after 1 minute
+Mon Jan 29 2018 00:00:47 Info:    Summary: 1 sample (aggregate); delta is +0.0000183 seconds, latency +0.0000598
+Mon Jan 29 2018 00:00:47 Info:    Local clock aligned forward to match 192.168.1.1; delta +0.0000183 seconds, protocol PTP, latency 0.06 ms (PTP steering)
+Mon Jan 29 2018 00:00:47 Info:    Next time check due in 1 minute (fixed schedule)
+===================================
+Mon Jan 29 2018 00:01:47 Info:    Wait expired after 1 minute
+Mon Jan 29 2018 00:01:47 Info:    Summary: 1 sample (aggregate); delta is +0.0000294 seconds, latency +0.0000586
+Mon Jan 29 2018 00:01:47 Info:    Local clock aligned forward to match 192.168.1.1; delta +0.0000294 seconds, protocol PTP, latency 0.06 ms (PTP steering)
+Mon Jan 29 2018 00:01:47 Info:    Next time check due in 1 minute (fixed schedule)
+===================================
+Mon Jan 29 2018 00:02:47 Info:    Wait expired after 1 minute
+Mon Jan 29 2018 00:02:47 Info:    Summary: 1 sample (aggregate); delta is +0.0000181 seconds, latency +0.0000574
+Mon Jan 29 2018 00:02:47 Info:    Local clock aligned forward to match 192.168.1.1; delta +0.0000181 seconds, protocol PTP, latency 0.06 ms (PTP steering)
+Mon Jan 29 2018 00:02:47 Info:    Next time check due in 1 minute (fixed schedule)
+===================================
+Mon Jan 29 2018 00:03:47 Info:    Wait expired after 1 minute
+Mon Jan 29 2018 00:03:47 Info:    Summary: 1 sample (aggregate); delta is +0.0000121 seconds, latency +0.0000601
+Mon Jan 29 2018 00:03:47 Info:    Local clock aligned forward to match 192.168.1.1; delta +0.0000121 seconds, protocol PTP, latency 0.06 ms (PTP steering)
+Mon Jan 29 2018 00:03:47 Info:    Next time check due in 1 minute (fixed schedule)
+===================================
+Mon Jan 29 2018 00:04:47 Info:    Wait expired after 1 minute
+Mon Jan 29 2018 00:04:47 Info:    Summary: 1 sample (aggregate); delta is +0.0000292 seconds, latency +0.0000614
+Mon Jan 29 2018 00:04:47 Info:    Local clock aligned forward to match 192.168.1.1; delta +0.0000292 seconds, protocol PTP, latency 0.06 ms (PTP steering)
+Mon Jan 29 2018 00:04:47 Info:    Next time check due in 1 minute (fixed schedule)
+===================================
+Mon Jan 29 2018 00:05:47 Info:    Wait expired after 1 minute
+Mon Jan 29 2018 00:05:47 Info:    Summary: 1 sample (aggregate); delta is +0.0000036 seconds, latency +0.0000650
+Mon Jan 29 2018 00:05:47 Info:    Local clock aligned forward to match 192.168.1.1; delta +0.0000036 seconds, protocol PTP, latency 0.07 ms (PTP steering)
+Mon Jan 29 2018 00:05:47 Info:    Next time check due in 1 minute (fixed schedule)
+===================================
+Mon Jan 29 2018 00:06:47 Info:    Wait expired after 1 minute
+Mon Jan 29 2018 00:06:47 Info:    Summary: 1 sample (aggregate); delta is +0.0000034 seconds, latency +0.0000614
+Mon Jan 29 2018 00:06:47 Info:    Local clock aligned forward to match 192.168.1.1; delta +0.0000034 seconds, protocol PTP, latency 0.06 ms (PTP steering)
+Mon Jan 29 2018 00:06:47 Info:    Next time check due in 1 minute (fixed schedule)
+===================================
+Mon Jan 29 2018 00:07:47 Info:    Wait expired after 1 minute
+Mon Jan 29 2018 00:07:47 Info:    Summary: 1 sample (aggregate); delta is +0.0000390 seconds, latency +0.0000620
+Mon Jan 29 2018 00:07:47 Info:    Local clock aligned forward to match 192.168.1.1; delta +0.0000090 seconds, protocol PTP, latency 0.06 ms (PTP steering)
+Mon Jan 29 2018 00:07:47 Info:    Next time check due in 1 minute (fixed schedule)
